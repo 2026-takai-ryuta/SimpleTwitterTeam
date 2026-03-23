@@ -39,6 +39,7 @@
 				</div>
 			</div>
 		</c:if>
+		<!--  <<<<<<< HEAD-->
 	</div>
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
@@ -47,6 +48,42 @@
 					<li><c:out value="${errorMessage}" />
 				</c:forEach>
 			</ul>
+			<!--  =======
+		</div>
+		<c:if test="${ not empty errorMessages }">
+			<div class="errorMessages">
+				<ul>
+					<c:forEach items="${errorMessages}" var="errorMessage">
+						<li><c:out value="${errorMessage}" />
+					</c:forEach>
+				</ul>
+			</div>
+			<c:remove var="errorMessages" scope="session" />
+		</c:if>
+
+		<form action="./" method="get">
+			日付： <input type="date" id="start" name="start" value="${start}">
+			～ <input type="date" id="end" name="end" value="${end}"> <input
+				type="submit" value="絞り込み">
+		</form>
+		<br />
+		<div class="search">
+			<form action="./" action="get">
+				つぶやき： <input type="text" name="word" value="${searchWord}" /> <input
+					type="radio" name="radiobutton" value="startFrom" checked="checked">
+				から始まる <input type="submit" value="検索">
+			</form>
+		</div>
+		<br />
+		<div class="form-area">
+			<c:if test="${ isShowMessageForm }">
+				<form action="message" method="post">
+					いま、どうしてる？<br />
+					<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+					<br /> <input type="submit" value="つぶやく">（140文字まで）
+				</form>
+			</c:if>
+			>>>>>>> 875d2cfc1b28ca626f71363b86c41074e8251ca7-->
 		</div>
 		<c:remove var="errorMessages" scope="session" />
 	</c:if>
@@ -61,8 +98,9 @@
 	<div class="search">
 		<form action="./" action="get">
 			つぶやき： <input type="text" name="word" value="${searchWord}" /> <input
-				type="radio" name="radiobutton" value="contain" checked="checked">
-			を含む <input type="submit" value="検索">
+				type="radio" name="radiobutton" value="startFrom" checked="checked">
+			から始まる <input type="radio" name="radiobutton" value="contain"
+				checked="checked"> を含む <input type="submit" value="検索">
 		</form>
 	</div>
 	<br />

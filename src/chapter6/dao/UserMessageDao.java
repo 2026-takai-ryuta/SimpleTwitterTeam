@@ -16,8 +16,8 @@ import chapter6.exception.SQLRuntimeException;
 
 public class UserMessageDao {
 
-	public List<UserMessage> select(Connection connection, Integer userId, String start, String end, String searchWord,
-			String likeSearch, int num) {
+//<<<<<<< HEAD
+	public List<UserMessage> select(Connection connection, Integer userId, String start, String end, String searchWord, String likeSearch, int num) {
 
 		PreparedStatement ps = null;
 		try {
@@ -34,6 +34,25 @@ public class UserMessageDao {
 			sql.append("ON messages.user_id = users.id ");
 			sql.append("WHERE messages.created_date BETWEEN ? AND ? ");
 			if (userId != null) {
+//=======
+//	public List<UserMessage> select(Connection connection, Integer userId, String start, String end, String searchWord, String likeSearch, int num) {
+//		PreparedStatement ps = null;
+//		try {
+//			StringBuilder sql = new StringBuilder();
+//			sql.append("SELECT ");
+//			sql.append(" messages.id as id, ");
+//			sql.append(" messages.text as text, ");
+//			sql.append(" messages.user_id as user_id, ");
+//			sql.append(" users.account as account, ");
+//			sql.append(" users.name as name, ");
+//			sql.append(" messages.created_date as created_date ");
+//			sql.append("FROM messages ");
+//			sql.append("INNER JOIN users ");
+//			sql.append("ON messages.user_id = users.id ");
+//			sql.append("WHERE messages.created_date BETWEEN ? AND ? ");
+//
+//			if(userId != null) {
+//>>>>>>> 875d2cfc1b28ca626f71363b86c41074e8251ca7
 				sql.append("AND user_id = ? ");
 			}
 
@@ -42,7 +61,27 @@ public class UserMessageDao {
 			}
 
 			sql.append("ORDER BY created_date DESC limit " + num);
+//<<<<<<< HEAD
+//			ps = connection.prepareStatement(sql.toString());
+//=======
+//
 			ps = connection.prepareStatement(sql.toString());
+			ps.setString(1, start);
+			ps.setString(2, end);
+
+			if(userId != null) {
+				ps.setInt(3, userId);
+
+				if (!StringUtils.isBlank(searchWord)) {
+
+					ps.setString(4, searchWord + "%");
+				}
+			} else {
+				if (!StringUtils.isBlank(searchWord)) {
+					ps.setString(3, searchWord + "%");
+				}
+			}
+//>>>>>>> 875d2cfc1b28ca626f71363b86c41074e8251ca7
 
 			ps.setString(1, start);
 			ps.setString(2, end);
